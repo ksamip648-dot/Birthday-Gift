@@ -102,7 +102,7 @@
             background: rgba(40, 8, 30, 0.78);
             backdrop-filter: blur(25px);
             -webkit-backdrop-filter: blur(25px);
-            padding: 50px 35px 55px 35px;
+            padding: 40px 35px 45px 35px;
             border-radius: 32px;
             box-shadow: 0 25px 60px rgba(10, 1, 8, 0.75), 0 0 45px rgba(247, 37, 133, 0.45);
             text-align: center;
@@ -170,6 +170,64 @@
             }
         }
 
+        /* Photo Frame Styles */
+        .photo-frame {
+            width: 150px;
+            height: 150px;
+            margin: 0 auto 15px auto;
+            border-radius: 50%;
+            border: 4px solid rgba(255, 182, 215, 0.8);
+            box-shadow: 0 8px 25px rgba(247, 37, 133, 0.6), 0 0 15px rgba(255, 255, 255, 0.5);
+            overflow: hidden;
+            position: relative;
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        .photo-frame img {
+            width: 100%;
+            height: 100%;
+            object-fit: cover;
+            transition: transform 0.5s ease;
+        }
+
+        .photo-frame:hover img {
+            transform: scale(1.1);
+        }
+
+        /* Photo Grid for Page 4 */
+        .photo-grid {
+            display: flex;
+            justify-content: center;
+            gap: 12px;
+            margin: 15px 0;
+        }
+
+        .photo-grid .grid-img {
+            width: 90px;
+            height: 90px;
+            border-radius: 16px;
+            border: 2px solid rgba(255, 182, 215, 0.7);
+            object-fit: cover;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.4);
+            transition: transform 0.3s ease;
+        }
+
+        .photo-grid .grid-img:hover {
+            transform: translateY(-5px) scale(1.08);
+        }
+
+        /* Birthday Countdown / Age Box */
+        .dob-badge {
+            background: rgba(247, 37, 133, 0.2);
+            border: 1px dashed rgba(255, 182, 215, 0.5);
+            padding: 8px 16px;
+            border-radius: 20px;
+            color: #ffccd5;
+            font-size: 0.95rem;
+            margin: 10px auto 18px auto;
+            display: inline-block;
+        }
+
         .title-badge {
             display: inline-block;
             font-size: 0.85rem;
@@ -177,7 +235,7 @@
             letter-spacing: 2px;
             color: #ffccd5;
             font-weight: 700;
-            margin-bottom: 16px;
+            margin-bottom: 12px;
             background: rgba(247, 37, 133, 0.3);
             border: 1.5px solid rgba(255, 182, 215, 0.4);
             padding: 6px 18px;
@@ -187,18 +245,18 @@
 
         h1 {
             color: #ffffff;
-            margin-bottom: 24px;
-            font-size: 1.38rem;
-            line-height: 1.65;
+            margin-bottom: 20px;
+            font-size: 1.3rem;
+            line-height: 1.6;
             font-weight: 500;
             text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
         }
 
         .message-body p {
             color: #f8f8f8;
-            font-size: 1.15rem;
-            line-height: 1.75;
-            margin-bottom: 14px;
+            font-size: 1.05rem;
+            line-height: 1.7;
+            margin-bottom: 12px;
         }
 
         .highlight {
@@ -209,7 +267,7 @@
         }
 
         .shriya-name {
-            font-size: 2rem;
+            font-size: 1.9rem;
             font-weight: 800;
             letter-spacing: 3px;
             background: linear-gradient(45deg, #ffffff, #ffccd5, #ff758f, #ffd166);
@@ -217,7 +275,7 @@
             -webkit-text-fill-color: transparent;
             text-shadow: 0 0 25px rgba(247, 37, 133, 0.8);
             display: inline-block;
-            margin-top: 8px;
+            margin-top: 6px;
             animation: glowText 3s ease-in-out infinite alternate;
         }
 
@@ -227,7 +285,7 @@
         }
 
         .crown-icon {
-            font-size: 2.2rem;
+            font-size: 2rem;
             display: block;
             margin-bottom: -5px;
             animation: floatCrown 3s ease-in-out infinite alternate;
@@ -240,9 +298,9 @@
 
         .doctor-wish {
             display: inline-block;
-            margin-top: 15px;
+            margin-top: 12px;
             padding: 8px 20px;
-            font-size: 1.25rem;
+            font-size: 1.15rem;
             font-weight: 800;
             color: #ffffff;
             background: rgba(247, 37, 133, 0.25);
@@ -258,7 +316,7 @@
             justify-content: center;
             align-items: center;
             gap: 15px;
-            margin-top: 22px;
+            margin-top: 20px;
             position: relative;
             z-index: 20;
         }
@@ -268,7 +326,7 @@
             color: white;
             border: 1px solid rgba(255, 255, 255, 0.5);
             padding: 12px 34px;
-            font-size: 1.15rem;
+            font-size: 1.1rem;
             border-radius: 30px;
             cursor: pointer;
             box-shadow: 0 8px 25px rgba(181, 23, 158, 0.5);
@@ -295,24 +353,6 @@
 
         .btn:active {
             transform: scale(0.97);
-        }
-
-        /* Decorative Vector Corner (Cake & Roses Cluster) */
-        .svg-birthday-corner {
-            position: absolute;
-            bottom: -35px;
-            right: -45px;
-            width: 240px;
-            height: 240px;
-            z-index: 1;
-            pointer-events: none;
-            filter: drop-shadow(0 12px 22px rgba(15, 2, 12, 0.6));
-            animation: gentleFloat 6s ease-in-out infinite alternate;
-        }
-
-        @keyframes gentleFloat {
-            0% { transform: scale(1) rotate(0deg); }
-            100% { transform: scale(1.04) rotate(3deg); }
         }
 
         /* Floating Balloons & Hearts */
@@ -403,27 +443,29 @@
 
         @media (max-width: 600px) {
             .card-container {
-                padding: 40px 22px 45px 22px;
+                padding: 35px 20px 40px 20px;
             }
             h1 {
-                font-size: 1.22rem;
-                margin-bottom: 18px;
+                font-size: 1.15rem;
+                margin-bottom: 15px;
             }
             .message-body p {
-                font-size: 1.02rem;
+                font-size: 0.98rem;
             }
             .shriya-name {
-                font-size: 1.65rem;
+                font-size: 1.55rem;
             }
             .btn {
                 padding: 10px 24px;
                 font-size: 1rem;
             }
-            .svg-birthday-corner {
-                width: 170px;
-                height: 170px;
-                bottom: -25px;
-                right: -30px;
+            .photo-frame {
+                width: 120px;
+                height: 120px;
+            }
+            .photo-grid .grid-img {
+                width: 75px;
+                height: 75px;
             }
             .open-card-btn {
                 padding: 16px 38px;
@@ -437,12 +479,13 @@
     <!-- Particle Star Field -->
     <canvas id="stars-canvas"></canvas>
 
-    <!-- Background Music -->
+    <!-- Local Audio Element -->
     <audio id="bg-music" loop preload="auto">
-        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
+        <source src="song.mp3" type="audio/mpeg">
+        Your browser does not support the audio element.
     </audio>
 
-    <button class="music-control" onclick="toggleMusic()" id="music-btn" title="Toggle Music">🎵</button>
+    <button class="music-control" onclick="toggleMusic(event)" id="music-btn" title="Toggle Music">🎵</button>
 
     <div id="floating-container"></div>
     <div id="sparkles-container"></div>
@@ -455,83 +498,20 @@
     <!-- Birthday Message Card Container -->
     <div class="card-container" id="birthday-card">
         <div class="card-ribbon"></div>
-        
-        <!-- Vector Art: Birthday Cake & Rose Cluster -->
-        <svg class="svg-birthday-corner" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
-            <defs>
-                <radialGradient id="pinkCakeGrad" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#FFCCD5"/>
-                    <stop offset="70%" stop-color="#FF758F"/>
-                    <stop offset="100%" stop-color="#C9184A"/>
-                </radialGradient>
-
-                <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#FFF3B0"/>
-                    <stop offset="60%" stop-color="#E9C46A"/>
-                    <stop offset="100%" stop-color="#F4A261"/>
-                </radialGradient>
-
-                <radialGradient id="roseRed" cx="50%" cy="50%" r="50%">
-                    <stop offset="0%" stop-color="#FF4D6D"/>
-                    <stop offset="65%" stop-color="#C9184A"/>
-                    <stop offset="100%" stop-color="#590D22"/>
-                </radialGradient>
-
-                <linearGradient id="leafGreen" x1="0%" y1="0%" x2="100%" y2="100%">
-                    <stop offset="0%" stop-color="#95D5B2"/>
-                    <stop offset="100%" stop-color="#2D6A4F"/>
-                </linearGradient>
-
-                <filter id="softGlow">
-                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
-                    <feMerge>
-                        <feMergeNode in="coloredBlur"/>
-                        <feMergeNode in="SourceGraphic"/>
-                    </feMerge>
-                </filter>
-            </defs>
-
-            <g transform="translate(15, 15)">
-                <!-- Leaves Base -->
-                <path d="M150 210 C110 170, 140 120, 190 130 C180 180, 160 210, 150 210 Z" fill="url(#leafGreen)" opacity="0.9"/>
-                <path d="M190 220 C230 180, 250 220, 220 250 C180 240, 180 210, 190 220 Z" fill="url(#leafGreen)" opacity="0.85"/>
-
-                <!-- Rose Blossom 1 -->
-                <g transform="translate(130, 175)">
-                    <circle cx="0" cy="0" r="32" fill="url(#roseRed)"/>
-                    <path d="M-18 -8 C-25 -22, 5 -28, 20 -10 C30 5, 20 22, 0 24 C-20 25, -28 5, -18 -8 Z" fill="#FF8FA3" opacity="0.75"/>
-                    <circle cx="0" cy="0" r="8" fill="#FFF0F5"/>
-                </g>
-
-                <!-- Birthday Cake Body -->
-                <g transform="translate(195, 185)">
-                    <ellipse cx="0" cy="40" rx="45" ry="12" fill="#E9C46A" opacity="0.8"/>
-                    <rect x="-35" y="0" width="70" height="35" rx="6" fill="url(#pinkCakeGrad)"/>
-                    <path d="M-35 0 C-25 12, -15 0, -5 10 C5 0, 15 12, 25 0 C30 10, 35 0, 35 0 L35 -15 L-35 -15 Z" fill="#FFF0F5"/>
-                    <rect x="-25" y="-30" width="50" height="30" rx="5" fill="#FFCCD5"/>
-                    <path d="M-25 -30 C-18 -22, -10 -30, 0 -22 C10 -30, 18 -22, 25 -30 L25 -40 L-25 -40 Z" fill="#FFF0F5"/>
-                    <rect x="-3" y="-55" width="6" height="18" rx="2" fill="#FFF0F5"/>
-                    <path d="M0 -67 C-5 -58, 0 -52, 0 -52 C0 -52, 5 -58, 0 -67 Z" fill="url(#goldGlow)" filter="url(#softGlow)"/>
-                    <circle cx="0" cy="-58" r="2" fill="#FFFFFF"/>
-                </g>
-
-                <!-- Accent Rose 2 -->
-                <g transform="translate(245, 135)">
-                    <circle cx="0" cy="0" r="22" fill="url(#pinkCakeGrad)"/>
-                    <circle cx="0" cy="0" r="6" fill="#FFF0F5"/>
-                </g>
-
-                <!-- Sparkling Golden Stars -->
-                <path d="M120 110 L123 118 L131 121 L123 124 L120 132 L117 124 L109 121 L117 118 Z" fill="#FFF3B0" filter="url(#softGlow)"/>
-                <path d="M250 80 L252 86 L258 88 L252 90 L250 96 L248 90 L242 88 L248 86 Z" fill="#FFF3B0" filter="url(#softGlow)"/>
-            </g>
-        </svg>
 
         <!-- Page 1 -->
         <div class="page active" id="page-1">
+            <div class="photo-frame">
+                <img src="photo1.jpg" alt="Shriya" id="main-photo-1">
+            </div>
             <span class="crown-icon">👑</span>
             <span class="title-badge">A Magical Day</span>
             <h1>Today is not just any ordinary day... it’s the day the world was blessed with <br><span class="shriya-name">SHRIYA</span> 💖</h1>
+            
+            <div class="dob-badge" id="dob-display">
+                🎂 Born: <span id="dob-date-text">--</span> B.S. (<span id="age-text">--</span> years of magic)
+            </div>
+
             <div class="btn-group">
                 <button class="btn" onclick="goToPage(2)">Next ✨</button>
             </div>
@@ -539,6 +519,9 @@
 
         <!-- Page 2 -->
         <div class="page" id="page-2">
+            <div class="photo-frame">
+                <img src="photo2.jpg" alt="Shriya photo 2" id="main-photo-2">
+            </div>
             <span class="title-badge">Your Kindness</span>
             <h1>Your laugh brightens up the darkest rooms, and your heart holds so much warmth and magic, <span class="highlight">Shriya</span>. ✨🌸</h1>
             <div class="btn-group">
@@ -549,17 +532,28 @@
 
         <!-- Page 3 -->
         <div class="page" id="page-3">
+            <div class="photo-frame">
+                <img src="photo3.jpg" alt="Shriya photo 3" id="main-photo-3">
+            </div>
             <span class="title-badge">My Birthday Wish</span>
             <h1>May your year ahead be filled with endless smiles, cozy moments, big dreams, and genuine happiness. 🎂🌷</h1>
             <div class="btn-group">
                 <button class="btn btn-prev" onclick="goToPage(2)">← Back</button>
-                <button class="btn" onclick="goToPage(4)">One More Thing... 💌</button>
+                <button class="btn" onclick="goToPage(4)">Memories 💌</button>
             </div>
         </div>
 
         <!-- Page 4 -->
         <div class="page" id="page-4">
             <span class="title-badge">Unbreakable Bond</span>
+            
+            <!-- Photo Grid showing all 3 photos -->
+            <div class="photo-grid">
+                <img src="photo1.jpg" class="grid-img" alt="Memory 1">
+                <img src="photo2.jpg" class="grid-img" alt="Memory 2">
+                <img src="photo3.jpg" class="grid-img" alt="Memory 3">
+            </div>
+
             <div class="message-body">
                 <p>Even though we're in different sections, that doesn't make any difference to our friendship. Keep studying hard, and may everything you've dreamed of come true. ✨</p>
                 <p>Wishing you endless happiness, success, and good health. 🩺💖</p>
@@ -586,27 +580,81 @@
     </div>
 
     <script>
-        // Audio Management
-        const music = document.getElementById('bg-music');
-        music.volume = 0.35;
+        // ==========================================
+        // 1. BIKRAM SAMBAD (B.S.) CONFIGURATION
+        // ==========================================
+        
+        // Enter her B.S. Date of Birth here:
+        const bsYear = 2067;       // e.g., 2061
+        const bsMonthIndex = 4;     // 1 for Baishakh, 2 for Jestha, 3 for Asar, ..., 12 for Chaitra
+        const bsDay = 8;          // e.g., 12
 
-        function attemptPlay() {
-            if (music.paused) {
-                music.play().catch(err => console.log("Audio play deferred till user interaction."));
+        // Nepali Month Names
+        const nepaliMonths = [
+            "Baishakh", "Jestha", "Asar", "Shrawan", 
+            "Bhadra", "Aswin", "Kartik", "Mangsir", 
+            "Poush", "Magh", "Falgun", "Chaitra"
+        ];
+
+        // ==========================================
+        // 2. DOB & AGE CALCULATION LOGIC
+        // ==========================================
+        function setupNepaliDOB() {
+            // Approx difference between B.S. and A.D. is ~56 years and 8.5 months
+            // Accurate A.D. year estimation for age calculation:
+            let approxAdYear = bsYear - 57;
+            if (bsMonthIndex >= 9) {
+                approxAdYear = bsYear - 56; // B.S. Poush to Chaitra falls into next A.D. year
             }
+
+            const monthName = nepaliMonths[bsMonthIndex - 1] || "Baishakh";
+            const formattedBsDate = `${bsYear} ${monthName} ${bsDay}`;
+
+            // Calculate age
+            const approxAdBirthDate = new Date(approxAdYear, (bsMonthIndex + 3) % 12, bsDay);
+            const today = new Date();
+            let age = today.getFullYear() - approxAdBirthDate.getFullYear();
+            const monthDiff = today.getMonth() - approxAdBirthDate.getMonth();
+            
+            if (monthDiff < 0 || (monthDiff === 0 && today.getDate() < approxAdBirthDate.getDate())) {
+                age--;
+            }
+
+            document.getElementById('dob-date-text').innerText = formattedBsDate;
+            document.getElementById('age-text').innerText = age;
+        }
+
+        setupNepaliDOB();
+
+        // Audio Handler
+        const audio = document.getElementById('bg-music');
+
+        function playAudio() {
+            audio.play().catch(err => console.log("Autoplay blocked or waiting for user interaction:", err));
+        }
+
+        // Heart Burst Click Effect
+        function createHeart(e) {
+            const heart = document.createElement('div');
+            heart.classList.add('click-heart');
+            const emojis = ['💖', '✨', '🌸', '💖', '👑', '🎂', '🎉'];
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 1200);
         }
 
         // Party Popper Confetti Burst Effect
         function triggerPartyPopper() {
             if (typeof confetti === 'function') {
-                // Left cannon
                 confetti({
                     particleCount: 70,
                     spread: 60,
                     origin: { x: 0.1, y: 0.8 },
                     colors: ['#ff758f', '#f72585', '#ffd166', '#ffffff', '#7209b7']
                 });
-                // Right cannon
                 confetti({
                     particleCount: 70,
                     spread: 60,
@@ -622,7 +670,7 @@
             const card = document.getElementById('birthday-card');
 
             trigger.classList.add('hidden');
-            attemptPlay();
+            playAudio();
             triggerPartyPopper();
 
             setTimeout(() => {
@@ -634,36 +682,22 @@
             const pages = document.querySelectorAll('.page');
             pages.forEach(page => page.classList.remove('active'));
             document.getElementById(`page-${pageNumber}`).classList.add('active');
-            attemptPlay();
-
-            // Trigger party popper again on the final page
+            
             if (pageNumber === 5) {
                 triggerPartyPopper();
             }
         }
 
-        function toggleMusic() {
+        function toggleMusic(event) {
+            event.stopPropagation();
             const btn = document.getElementById('music-btn');
-            if (music.paused) {
-                music.play();
+            if (audio.paused) {
+                audio.play();
                 btn.innerText = "🎵";
             } else {
-                music.pause();
+                audio.pause();
                 btn.innerText = "🔇";
             }
-        }
-
-        // Click Heart Generator
-        function createHeart(e) {
-            const heart = document.createElement('div');
-            heart.classList.add('click-heart');
-            const emojis = ['💖', '✨', '🌸', '💖', '👑', '🎂', '🎉'];
-            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
-            heart.style.left = e.clientX + 'px';
-            heart.style.top = e.clientY + 'px';
-            document.body.appendChild(heart);
-
-            setTimeout(() => heart.remove(), 1200);
         }
 
         // Floating Balloons & Hearts
