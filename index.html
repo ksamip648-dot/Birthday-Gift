@@ -1,0 +1,755 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Happy Birthday, Shriya ✨</title>
+    <!-- Canvas Confetti Library for Party Popper Effect -->
+    <script src="https://cdn.jsdelivr.net/npm/canvas-confetti@1.6.0/dist/confetti.browser.min.js"></script>
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            user-select: none;
+        }
+
+        body {
+            /* Rich Midnight Rose Gold & Sunset Magenta Gradient */
+            background: linear-gradient(135deg, #120111, #380822, #5a097a, #8e147e, #d81b60, #ff487d);
+            background-size: 400% 400%;
+            animation: romanticGradient 12s ease infinite;
+            height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            overflow: hidden;
+            position: relative;
+        }
+
+        @keyframes romanticGradient {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Ambient Bokeh Particle Canvas */
+        #stars-canvas {
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: 1;
+            pointer-events: none;
+        }
+
+        /* Initial "Open Card" Trigger Container */
+        .open-trigger-container {
+            z-index: 20;
+            text-align: center;
+            transition: all 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .open-trigger-container.hidden {
+            opacity: 0;
+            transform: scale(0.7);
+            pointer-events: none;
+            display: none;
+        }
+
+        .open-card-btn {
+            background: linear-gradient(45deg, #ff758f, #f72585, #7209b7);
+            color: white;
+            border: 2px solid rgba(255, 255, 255, 0.85);
+            padding: 20px 52px;
+            font-size: 1.5rem;
+            font-weight: 700;
+            border-radius: 50px;
+            cursor: pointer;
+            box-shadow: 0 10px 35px rgba(247, 37, 133, 0.6), 0 0 30px rgba(255, 117, 143, 0.6);
+            transition: all 0.4s ease;
+            position: relative;
+            animation: pulseGlow 2s infinite;
+        }
+
+        @keyframes pulseGlow {
+            0% {
+                box-shadow: 0 0 0 0 rgba(247, 37, 133, 0.8), 0 10px 30px rgba(247, 37, 133, 0.5);
+            }
+            70% {
+                box-shadow: 0 0 0 25px rgba(247, 37, 133, 0), 0 10px 30px rgba(247, 37, 133, 0.5);
+            }
+            100% {
+                box-shadow: 0 0 0 0 rgba(247, 37, 133, 0), 0 10px 30px rgba(247, 37, 133, 0.5);
+            }
+        }
+
+        .open-card-btn:hover {
+            transform: translateY(-4px) scale(1.06);
+            box-shadow: 0 18px 40px rgba(247, 37, 133, 0.9);
+        }
+
+        .open-card-btn:active {
+            transform: scale(0.96);
+        }
+
+        /* Glassmorphism Birthday Card */
+        .card-container {
+            width: 90%;
+            max-width: 540px;
+            background: rgba(40, 8, 30, 0.78);
+            backdrop-filter: blur(25px);
+            -webkit-backdrop-filter: blur(25px);
+            padding: 50px 35px 55px 35px;
+            border-radius: 32px;
+            box-shadow: 0 25px 60px rgba(10, 1, 8, 0.75), 0 0 45px rgba(247, 37, 133, 0.45);
+            text-align: center;
+            border: 2px solid rgba(255, 182, 215, 0.4);
+            z-index: 10;
+            position: relative;
+            overflow: hidden;
+            
+            /* Hiding logic */
+            display: none;
+            opacity: 0;
+            transform: translateY(30px) scale(0.9);
+            transition: all 0.8s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        /* Decorative Ribbon Bow Banner */
+        .card-ribbon {
+            position: absolute;
+            top: 0;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100%;
+            height: 12px;
+            background: linear-gradient(90deg, #ff758f, #f72585, #ffccd5, #f72585, #ff758f);
+            box-shadow: 0 2px 10px rgba(247, 37, 133, 0.6);
+        }
+
+        .card-container.reveal {
+            display: block;
+            opacity: 1;
+            transform: translateY(0) scale(1);
+            animation: popIn 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        @keyframes popIn {
+            from {
+                opacity: 0;
+                transform: translateY(30px) scale(0.9);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .page {
+            display: none;
+            position: relative;
+            z-index: 10;
+            animation: slideUpFade 0.8s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+        }
+
+        .page.active {
+            display: block;
+        }
+
+        @keyframes slideUpFade {
+            from {
+                opacity: 0;
+                transform: translateY(20px) scale(0.97);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0) scale(1);
+            }
+        }
+
+        .title-badge {
+            display: inline-block;
+            font-size: 0.85rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: #ffccd5;
+            font-weight: 700;
+            margin-bottom: 16px;
+            background: rgba(247, 37, 133, 0.3);
+            border: 1.5px solid rgba(255, 182, 215, 0.4);
+            padding: 6px 18px;
+            border-radius: 20px;
+            box-shadow: 0 4px 15px rgba(247, 37, 133, 0.2);
+        }
+
+        h1 {
+            color: #ffffff;
+            margin-bottom: 24px;
+            font-size: 1.38rem;
+            line-height: 1.65;
+            font-weight: 500;
+            text-shadow: 0 2px 10px rgba(0, 0, 0, 0.4);
+        }
+
+        .message-body p {
+            color: #f8f8f8;
+            font-size: 1.15rem;
+            line-height: 1.75;
+            margin-bottom: 14px;
+        }
+
+        .highlight {
+            color: #ff758f;
+            font-weight: 700;
+            letter-spacing: 1px;
+            text-shadow: 0 0 12px rgba(255, 117, 143, 0.7);
+        }
+
+        .shriya-name {
+            font-size: 2rem;
+            font-weight: 800;
+            letter-spacing: 3px;
+            background: linear-gradient(45deg, #ffffff, #ffccd5, #ff758f, #ffd166);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 25px rgba(247, 37, 133, 0.8);
+            display: inline-block;
+            margin-top: 8px;
+            animation: glowText 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes glowText {
+            from { filter: drop-shadow(0 0 8px rgba(255, 117, 143, 0.6)); }
+            to { filter: drop-shadow(0 0 18px rgba(255, 209, 102, 0.8)); }
+        }
+
+        .crown-icon {
+            font-size: 2.2rem;
+            display: block;
+            margin-bottom: -5px;
+            animation: floatCrown 3s ease-in-out infinite alternate;
+        }
+
+        @keyframes floatCrown {
+            from { transform: translateY(0) rotate(-3deg); }
+            to { transform: translateY(-6px) rotate(3deg); }
+        }
+
+        .doctor-wish {
+            display: inline-block;
+            margin-top: 15px;
+            padding: 8px 20px;
+            font-size: 1.25rem;
+            font-weight: 800;
+            color: #ffffff;
+            background: rgba(247, 37, 133, 0.25);
+            border: 1px dashed rgba(255, 182, 215, 0.6);
+            border-radius: 25px;
+            text-shadow: 0 0 12px rgba(247, 37, 133, 0.6);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+
+        /* Dual Button Navigation Container */
+        .btn-group {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 15px;
+            margin-top: 22px;
+            position: relative;
+            z-index: 20;
+        }
+
+        .btn {
+            background: linear-gradient(45deg, #7209b7, #b5179e, #f72585);
+            color: white;
+            border: 1px solid rgba(255, 255, 255, 0.5);
+            padding: 12px 34px;
+            font-size: 1.15rem;
+            border-radius: 30px;
+            cursor: pointer;
+            box-shadow: 0 8px 25px rgba(181, 23, 158, 0.5);
+            transition: all 0.3s ease;
+        }
+
+        .btn-prev {
+            background: rgba(255, 255, 255, 0.14);
+            border: 1px solid rgba(255, 182, 215, 0.4);
+            color: #ffccd5;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+        }
+
+        .btn:hover {
+            transform: translateY(-3px) scale(1.05);
+            box-shadow: 0 14px 32px rgba(247, 37, 133, 0.8);
+        }
+
+        .btn-prev:hover {
+            background: rgba(255, 255, 255, 0.25);
+            color: #ffffff;
+            box-shadow: 0 6px 20px rgba(255, 117, 143, 0.4);
+        }
+
+        .btn:active {
+            transform: scale(0.97);
+        }
+
+        /* Decorative Vector Corner (Cake & Roses Cluster) */
+        .svg-birthday-corner {
+            position: absolute;
+            bottom: -35px;
+            right: -45px;
+            width: 240px;
+            height: 240px;
+            z-index: 1;
+            pointer-events: none;
+            filter: drop-shadow(0 12px 22px rgba(15, 2, 12, 0.6));
+            animation: gentleFloat 6s ease-in-out infinite alternate;
+        }
+
+        @keyframes gentleFloat {
+            0% { transform: scale(1) rotate(0deg); }
+            100% { transform: scale(1.04) rotate(3deg); }
+        }
+
+        /* Floating Balloons & Hearts */
+        .floating-element {
+            position: absolute;
+            bottom: -80px;
+            animation: floatUp 12s linear infinite;
+            z-index: 2;
+            pointer-events: none;
+            opacity: 0.85;
+        }
+
+        @keyframes floatUp {
+            0% {
+                transform: translateY(0) rotate(0deg);
+                opacity: 0.85;
+            }
+            100% {
+                transform: translateY(-115vh) rotate(360deg);
+                opacity: 0;
+            }
+        }
+
+        /* Click Spawning Hearts */
+        .click-heart {
+            position: absolute;
+            pointer-events: none;
+            z-index: 999;
+            animation: burstUp 1.2s cubic-bezier(0.25, 1, 0.5, 1) forwards;
+            font-size: 1.5rem;
+        }
+
+        @keyframes burstUp {
+            0% {
+                opacity: 1;
+                transform: translate(-50%, -50%) scale(0.5);
+            }
+            100% {
+                opacity: 0;
+                transform: translate(-50%, -120px) scale(1.5) rotate(20deg);
+            }
+        }
+
+        /* Confetti / Petal Sparkles */
+        .sparkle {
+            position: absolute;
+            top: -20px;
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            pointer-events: none;
+            z-index: 3;
+            animation: sparkleFall linear infinite;
+        }
+
+        @keyframes sparkleFall {
+            0% {
+                top: -10%;
+                transform: translateX(0) rotate(0deg);
+            }
+            100% {
+                top: 105%;
+                transform: translateX(100px) rotate(360deg);
+            }
+        }
+
+        /* Audio Controller */
+        .music-control {
+            position: absolute;
+            top: 22px;
+            right: 22px;
+            background: rgba(45, 10, 35, 0.8);
+            border: 1.5px solid rgba(255, 182, 193, 0.5);
+            color: #ffffff;
+            padding: 12px;
+            border-radius: 50%;
+            cursor: pointer;
+            z-index: 100;
+            font-size: 1.2rem;
+            box-shadow: 0 4px 18px rgba(0, 0, 0, 0.4);
+            backdrop-filter: blur(10px);
+            transition: transform 0.3s ease;
+        }
+
+        .music-control:hover {
+            transform: scale(1.15) rotate(10deg);
+        }
+
+        @media (max-width: 600px) {
+            .card-container {
+                padding: 40px 22px 45px 22px;
+            }
+            h1 {
+                font-size: 1.22rem;
+                margin-bottom: 18px;
+            }
+            .message-body p {
+                font-size: 1.02rem;
+            }
+            .shriya-name {
+                font-size: 1.65rem;
+            }
+            .btn {
+                padding: 10px 24px;
+                font-size: 1rem;
+            }
+            .svg-birthday-corner {
+                width: 170px;
+                height: 170px;
+                bottom: -25px;
+                right: -30px;
+            }
+            .open-card-btn {
+                padding: 16px 38px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body onclick="createHeart(event)">
+
+    <!-- Particle Star Field -->
+    <canvas id="stars-canvas"></canvas>
+
+    <!-- Background Music -->
+    <audio id="bg-music" loop preload="auto">
+        <source src="https://cdn.pixabay.com/download/audio/2022/05/27/audio_1808fbf07a.mp3?filename=romantic-piano-112199.mp3" type="audio/mpeg">
+    </audio>
+
+    <button class="music-control" onclick="toggleMusic()" id="music-btn" title="Toggle Music">🎵</button>
+
+    <div id="floating-container"></div>
+    <div id="sparkles-container"></div>
+
+    <!-- Initial Trigger Button -->
+    <div class="open-trigger-container" id="trigger-container">
+        <button class="open-card-btn" onclick="openCard()">Open Your Gift 🎁✨</button>
+    </div>
+
+    <!-- Birthday Message Card Container -->
+    <div class="card-container" id="birthday-card">
+        <div class="card-ribbon"></div>
+        
+        <!-- Vector Art: Birthday Cake & Rose Cluster -->
+        <svg class="svg-birthday-corner" viewBox="0 0 300 300" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <defs>
+                <radialGradient id="pinkCakeGrad" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#FFCCD5"/>
+                    <stop offset="70%" stop-color="#FF758F"/>
+                    <stop offset="100%" stop-color="#C9184A"/>
+                </radialGradient>
+
+                <radialGradient id="goldGlow" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#FFF3B0"/>
+                    <stop offset="60%" stop-color="#E9C46A"/>
+                    <stop offset="100%" stop-color="#F4A261"/>
+                </radialGradient>
+
+                <radialGradient id="roseRed" cx="50%" cy="50%" r="50%">
+                    <stop offset="0%" stop-color="#FF4D6D"/>
+                    <stop offset="65%" stop-color="#C9184A"/>
+                    <stop offset="100%" stop-color="#590D22"/>
+                </radialGradient>
+
+                <linearGradient id="leafGreen" x1="0%" y1="0%" x2="100%" y2="100%">
+                    <stop offset="0%" stop-color="#95D5B2"/>
+                    <stop offset="100%" stop-color="#2D6A4F"/>
+                </linearGradient>
+
+                <filter id="softGlow">
+                    <feGaussianBlur stdDeviation="3" result="coloredBlur"/>
+                    <feMerge>
+                        <feMergeNode in="coloredBlur"/>
+                        <feMergeNode in="SourceGraphic"/>
+                    </feMerge>
+                </filter>
+            </defs>
+
+            <g transform="translate(15, 15)">
+                <!-- Leaves Base -->
+                <path d="M150 210 C110 170, 140 120, 190 130 C180 180, 160 210, 150 210 Z" fill="url(#leafGreen)" opacity="0.9"/>
+                <path d="M190 220 C230 180, 250 220, 220 250 C180 240, 180 210, 190 220 Z" fill="url(#leafGreen)" opacity="0.85"/>
+
+                <!-- Rose Blossom 1 -->
+                <g transform="translate(130, 175)">
+                    <circle cx="0" cy="0" r="32" fill="url(#roseRed)"/>
+                    <path d="M-18 -8 C-25 -22, 5 -28, 20 -10 C30 5, 20 22, 0 24 C-20 25, -28 5, -18 -8 Z" fill="#FF8FA3" opacity="0.75"/>
+                    <circle cx="0" cy="0" r="8" fill="#FFF0F5"/>
+                </g>
+
+                <!-- Birthday Cake Body -->
+                <g transform="translate(195, 185)">
+                    <ellipse cx="0" cy="40" rx="45" ry="12" fill="#E9C46A" opacity="0.8"/>
+                    <rect x="-35" y="0" width="70" height="35" rx="6" fill="url(#pinkCakeGrad)"/>
+                    <path d="M-35 0 C-25 12, -15 0, -5 10 C5 0, 15 12, 25 0 C30 10, 35 0, 35 0 L35 -15 L-35 -15 Z" fill="#FFF0F5"/>
+                    <rect x="-25" y="-30" width="50" height="30" rx="5" fill="#FFCCD5"/>
+                    <path d="M-25 -30 C-18 -22, -10 -30, 0 -22 C10 -30, 18 -22, 25 -30 L25 -40 L-25 -40 Z" fill="#FFF0F5"/>
+                    <rect x="-3" y="-55" width="6" height="18" rx="2" fill="#FFF0F5"/>
+                    <path d="M0 -67 C-5 -58, 0 -52, 0 -52 C0 -52, 5 -58, 0 -67 Z" fill="url(#goldGlow)" filter="url(#softGlow)"/>
+                    <circle cx="0" cy="-58" r="2" fill="#FFFFFF"/>
+                </g>
+
+                <!-- Accent Rose 2 -->
+                <g transform="translate(245, 135)">
+                    <circle cx="0" cy="0" r="22" fill="url(#pinkCakeGrad)"/>
+                    <circle cx="0" cy="0" r="6" fill="#FFF0F5"/>
+                </g>
+
+                <!-- Sparkling Golden Stars -->
+                <path d="M120 110 L123 118 L131 121 L123 124 L120 132 L117 124 L109 121 L117 118 Z" fill="#FFF3B0" filter="url(#softGlow)"/>
+                <path d="M250 80 L252 86 L258 88 L252 90 L250 96 L248 90 L242 88 L248 86 Z" fill="#FFF3B0" filter="url(#softGlow)"/>
+            </g>
+        </svg>
+
+        <!-- Page 1 -->
+        <div class="page active" id="page-1">
+            <span class="crown-icon">👑</span>
+            <span class="title-badge">A Magical Day</span>
+            <h1>Today is not just any ordinary day... it’s the day the world was blessed with <br><span class="shriya-name">SHRIYA</span> 💖</h1>
+            <div class="btn-group">
+                <button class="btn" onclick="goToPage(2)">Next ✨</button>
+            </div>
+        </div>
+
+        <!-- Page 2 -->
+        <div class="page" id="page-2">
+            <span class="title-badge">Your Kindness</span>
+            <h1>Your laugh brightens up the darkest rooms, and your heart holds so much warmth and magic, <span class="highlight">Shriya</span>. ✨🌸</h1>
+            <div class="btn-group">
+                <button class="btn btn-prev" onclick="goToPage(1)">← Back</button>
+                <button class="btn" onclick="goToPage(3)">Continue 💖</button>
+            </div>
+        </div>
+
+        <!-- Page 3 -->
+        <div class="page" id="page-3">
+            <span class="title-badge">My Birthday Wish</span>
+            <h1>May your year ahead be filled with endless smiles, cozy moments, big dreams, and genuine happiness. 🎂🌷</h1>
+            <div class="btn-group">
+                <button class="btn btn-prev" onclick="goToPage(2)">← Back</button>
+                <button class="btn" onclick="goToPage(4)">One More Thing... 💌</button>
+            </div>
+        </div>
+
+        <!-- Page 4 -->
+        <div class="page" id="page-4">
+            <span class="title-badge">Unbreakable Bond</span>
+            <div class="message-body">
+                <p>Even though we're in different sections, that doesn't make any difference to our friendship. Keep studying hard, and may everything you've dreamed of come true. ✨</p>
+                <p>Wishing you endless happiness, success, and good health. 🩺💖</p>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-prev" onclick="goToPage(3)">← Back</button>
+                <button class="btn" onclick="goToPage(5)">Final Wishes 👑</button>
+            </div>
+        </div>
+
+        <!-- Page 5 (Final Grand Wish) -->
+        <div class="page" id="page-5">
+            <span class="title-badge">Happy Birthday!</span>
+            <div class="message-body">
+                <h1>HAPPY BIRTHDAY, <span class="highlight">SHRIYA</span>! 🎉✨</h1>
+                <p>Forever blessed to have you. Here's to us—today and always. 🥂💝</p>
+                <div class="doctor-wish">🩺 Future Doctor in the making!! 🩺</div>
+            </div>
+            <div class="btn-group">
+                <button class="btn btn-prev" onclick="goToPage(4)">← Back</button>
+            </div>
+        </div>
+
+    </div>
+
+    <script>
+        // Audio Management
+        const music = document.getElementById('bg-music');
+        music.volume = 0.35;
+
+        function attemptPlay() {
+            if (music.paused) {
+                music.play().catch(err => console.log("Audio play deferred till user interaction."));
+            }
+        }
+
+        // Party Popper Confetti Burst Effect
+        function triggerPartyPopper() {
+            if (typeof confetti === 'function') {
+                // Left cannon
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { x: 0.1, y: 0.8 },
+                    colors: ['#ff758f', '#f72585', '#ffd166', '#ffffff', '#7209b7']
+                });
+                // Right cannon
+                confetti({
+                    particleCount: 70,
+                    spread: 60,
+                    origin: { x: 0.9, y: 0.8 },
+                    colors: ['#ff758f', '#f72585', '#ffd166', '#ffffff', '#7209b7']
+                });
+            }
+        }
+
+        // Open Card Function
+        function openCard() {
+            const trigger = document.getElementById('trigger-container');
+            const card = document.getElementById('birthday-card');
+
+            trigger.classList.add('hidden');
+            attemptPlay();
+            triggerPartyPopper();
+
+            setTimeout(() => {
+                card.classList.add('reveal');
+            }, 200);
+        }
+
+        function goToPage(pageNumber) {
+            const pages = document.querySelectorAll('.page');
+            pages.forEach(page => page.classList.remove('active'));
+            document.getElementById(`page-${pageNumber}`).classList.add('active');
+            attemptPlay();
+
+            // Trigger party popper again on the final page
+            if (pageNumber === 5) {
+                triggerPartyPopper();
+            }
+        }
+
+        function toggleMusic() {
+            const btn = document.getElementById('music-btn');
+            if (music.paused) {
+                music.play();
+                btn.innerText = "🎵";
+            } else {
+                music.pause();
+                btn.innerText = "🔇";
+            }
+        }
+
+        // Click Heart Generator
+        function createHeart(e) {
+            const heart = document.createElement('div');
+            heart.classList.add('click-heart');
+            const emojis = ['💖', '✨', '🌸', '💖', '👑', '🎂', '🎉'];
+            heart.innerText = emojis[Math.floor(Math.random() * emojis.length)];
+            heart.style.left = e.clientX + 'px';
+            heart.style.top = e.clientY + 'px';
+            document.body.appendChild(heart);
+
+            setTimeout(() => heart.remove(), 1200);
+        }
+
+        // Floating Balloons & Hearts
+        const floatContainer = document.getElementById('floating-container');
+        const colors = [
+            'rgba(247, 37, 133, 0.6)',
+            'rgba(181, 23, 158, 0.5)',
+            'rgba(255, 182, 193, 0.65)',
+            'rgba(255, 243, 176, 0.55)'
+        ];
+
+        for (let i = 0; i < 22; i++) {
+            const elem = document.createElement('div');
+            elem.classList.add('floating-element');
+            const size = Math.floor(Math.random() * 22) + 14;
+            
+            elem.style.width = `${size}px`;
+            elem.style.height = `${size * 1.25}px`;
+            elem.style.borderRadius = "50% 50% 50% 50% / 40% 40% 60% 60%";
+            elem.style.left = `${Math.random() * 95}%`;
+            elem.style.animationDelay = `${Math.random() * 12}s`;
+            elem.style.animationDuration = `${Math.random() * 7 + 9}s`;
+            elem.style.background = colors[Math.floor(Math.random() * colors.length)];
+            elem.style.boxShadow = "0 4px 10px rgba(0,0,0,0.15)";
+            
+            floatContainer.appendChild(elem);
+        }
+
+        // Falling Confetti & Sparkles
+        const sparklesContainer = document.getElementById('sparkles-container');
+        const sparkleColors = ['#ff758f', '#ffb7b2', '#fff3b0', '#b5179e', '#ffffff'];
+
+        for (let i = 0; i < 26; i++) {
+            const sparkle = document.createElement('div');
+            sparkle.classList.add('sparkle');
+            const size = Math.floor(Math.random() * 8) + 6;
+            sparkle.style.width = `${size}px`;
+            sparkle.style.height = `${size}px`;
+            sparkle.style.left = `${Math.random() * 100}%`;
+            sparkle.style.animationDelay = `${Math.random() * 8}s`;
+            sparkle.style.animationDuration = `${Math.random() * 5 + 5}s`;
+            sparkle.style.background = sparkleColors[Math.floor(Math.random() * sparkleColors.length)];
+            sparklesContainer.appendChild(sparkle);
+        }
+
+        // Background Star Field Canvas
+        const canvas = document.getElementById('stars-canvas');
+        const ctx = canvas.getContext('2d');
+
+        function resizeCanvas() {
+            canvas.width = window.innerWidth;
+            canvas.height = window.innerHeight;
+        }
+        window.addEventListener('resize', resizeCanvas);
+        resizeCanvas();
+
+        const stars = [];
+        for (let i = 0; i < 40; i++) {
+            stars.push({
+                x: Math.random() * canvas.width,
+                y: Math.random() * canvas.height,
+                radius: Math.random() * 3 + 1,
+                alpha: Math.random() * 0.6 + 0.2,
+                speed: Math.random() * 0.3 + 0.1
+            });
+        }
+
+        function animateStars() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            stars.forEach(star => {
+                ctx.beginPath();
+                ctx.arc(star.x, star.y, star.radius, 0, Math.PI * 2);
+                ctx.fillStyle = `rgba(255, 245, 250, ${star.alpha})`;
+                ctx.shadowBlur = 10;
+                ctx.shadowColor = "rgba(255, 117, 143, 0.8)";
+                ctx.fill();
+
+                star.y -= star.speed;
+                if (star.y < 0) {
+                    star.y = canvas.height;
+                    star.x = Math.random() * canvas.width;
+                }
+            });
+            requestAnimationFrame(animateStars);
+        }
+        animateStars();
+    </script>
+</body>
+</html>
